@@ -2,6 +2,8 @@
 
 A retro arcade-style Space Invaders game built with HTML5 Canvas, CSS3, and vanilla JavaScript.
 
+![Space Invaders screenshot](docs/screenshot.png)
+
 ## Play Online
 
 [Play here](https://concuben.github.io/SpaceInvaders)
