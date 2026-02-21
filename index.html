@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - Arcade Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="arcade-room">
+        <!-- Arcade Floor -->
+        <div class="arcade-floor"></div>
+
+        <!-- Pac-Man Cabinet (Left) -->
+        <div class="side-cabinet pacman-cabinet">
+            <div class="marquee">
+                <div class="marquee-content">PAC-MAN</div>
+            </div>
+            <div class="cabinet-body">
+                <div class="cabinet-screen">
+                    <div class="pacman-screen-content">
+                        <div class="pacman-maze"></div>
+                        <div class="pacman-character"></div>
+                        <div class="ghost ghost-blinky"></div>
+                        <div class="pac-dot dot-1"></div>
+                        <div class="pac-dot dot-2"></div>
+                        <div class="pac-dot dot-3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cabinet-base"></div>
+        </div>
+
+        <!-- Space Invaders Cabinet (Center) -->
+        <div class="arcade-cabinet main-cabinet">
+        <!-- Marquee -->
+        <div class="marquee">
+            <div class="marquee-content">SPACE INVADERS</div>
+        </div>
+
+        <!-- Cabinet Top -->
+        <div class="cabinet-top"></div>
+
+        <!-- Screen Area -->
+        <div class="screen-area">
+            <div class="bezel">
+                <div class="screen-container">
+                    <div class="game-container">
+                        <canvas id="gameCanvas"></canvas>
+                        <div class="scanlines"></div>
+                        <div id="ui-overlay">
+                            <div id="score">Score: 0</div>
+                            <div id="lives">Lives: 3</div>
+                            <div id="level">Level: 1</div>
+                        </div>
+                    </div>
+                    <div id="start-screen" class="screen">
+                        <h1>SPACE INVADERS</h1>
+                        <div class="insert-coin">INSERT COIN</div>
+                        <p>Use ARROW KEYS or WASD to move</p>
+                        <p>Press SPACE to shoot</p>
+                        <button id="start-button">START GAME</button>
+                    </div>
+                    <div id="game-over-screen" class="screen hidden">
+                        <h1>GAME OVER</h1>
+                        <p id="final-score">Final Score: 0</p>
+                        <button id="restart-button">PLAY AGAIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="coin-slot">
+                <div class="coin-label">INSERT COIN</div>
+                <div class="slot"></div>
+            </div>
+            <div class="speaker speaker-left"></div>
+            <div class="speaker speaker-right"></div>
+        </div>
+
+        <!-- Cabinet Bottom -->
+        <div class="cabinet-bottom"></div>
+    </div>
+
+    <!-- Dig Dug Cabinet (Right) -->
+    <div class="side-cabinet digdug-cabinet">
+        <div class="marquee">
+            <div class="marquee-content">DIG DUG</div>
+        </div>
+        <div class="cabinet-body">
+            <div class="cabinet-screen">
+                <div class="digdug-screen-content">
+                    <div class="digdug-character"></div>
+                    <div class="pooka"></div>
+                    <div class="rock rock-1"></div>
+                    <div class="rock rock-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="cabinet-base"></div>
+    </div>
+
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>

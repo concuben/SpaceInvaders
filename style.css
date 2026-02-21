@@ -1,0 +1,985 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    color: #00ff00;
+    perspective: 2000px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* Arcade Room Container */
+.arcade-room {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 80px;
+    padding-bottom: 50px;
+    background: linear-gradient(to bottom, #1a0a1e 0%, #0a0512 50%, #000000 100%);
+}
+
+/* Arcade Floor with Perspective Grid */
+.arcade-floor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background:
+        linear-gradient(90deg,
+            transparent 0%,
+            transparent calc(10% - 1px),
+            rgba(0, 255, 255, 0.1) calc(10% - 1px),
+            rgba(0, 255, 255, 0.1) 10%,
+            transparent 10%,
+            transparent calc(20% - 1px),
+            rgba(0, 255, 255, 0.1) calc(20% - 1px),
+            rgba(0, 255, 255, 0.1) 20%,
+            transparent 20%,
+            transparent calc(30% - 1px),
+            rgba(0, 255, 255, 0.1) calc(30% - 1px),
+            rgba(0, 255, 255, 0.1) 30%,
+            transparent 30%,
+            transparent calc(40% - 1px),
+            rgba(0, 255, 255, 0.1) calc(40% - 1px),
+            rgba(0, 255, 255, 0.1) 40%,
+            transparent 40%,
+            transparent calc(50% - 1px),
+            rgba(0, 255, 255, 0.2) calc(50% - 1px),
+            rgba(0, 255, 255, 0.2) 50%,
+            transparent 50%,
+            transparent calc(60% - 1px),
+            rgba(0, 255, 255, 0.1) calc(60% - 1px),
+            rgba(0, 255, 255, 0.1) 60%,
+            transparent 60%,
+            transparent calc(70% - 1px),
+            rgba(0, 255, 255, 0.1) calc(70% - 1px),
+            rgba(0, 255, 255, 0.1) 70%,
+            transparent 70%,
+            transparent calc(80% - 1px),
+            rgba(0, 255, 255, 0.1) calc(80% - 1px),
+            rgba(0, 255, 255, 0.1) 80%,
+            transparent 80%,
+            transparent calc(90% - 1px),
+            rgba(0, 255, 255, 0.1) calc(90% - 1px),
+            rgba(0, 255, 255, 0.1) 90%
+        ),
+        repeating-linear-gradient(0deg,
+            transparent 0,
+            transparent 49px,
+            rgba(0, 255, 255, 0.1) 49px,
+            rgba(0, 255, 255, 0.1) 50px
+        );
+    transform: rotateX(75deg);
+    transform-origin: bottom center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.arcade-floor::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+/* Main Space Invaders Cabinet */
+.arcade-cabinet {
+    position: relative;
+    width: 900px;
+    background: linear-gradient(to bottom, #2a1810, #1a0f08);
+    border-radius: 15px 15px 0 0;
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.8),
+        inset 0 2px 10px rgba(255, 255, 255, 0.1);
+    transform: rotateX(2deg);
+    transform-style: preserve-3d;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.main-cabinet {
+    transform: rotateX(2deg) scale(1.1);
+    filter: brightness(1.2);
+}
+
+.main-cabinet::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Side Cabinets (Pac-Man and Dig Dug) */
+.side-cabinet {
+    position: relative;
+    width: 600px;
+    height: 800px;
+    background: linear-gradient(to bottom, #2a1810, #1a0f08);
+    border-radius: 15px 15px 0 0;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    opacity: 0.7;
+    filter: brightness(0.6);
+    z-index: 5;
+}
+
+.pacman-cabinet {
+    transform: rotateY(25deg) rotateX(2deg) scale(0.85);
+}
+
+.digdug-cabinet {
+    transform: rotateY(-25deg) rotateX(2deg) scale(0.85);
+}
+
+/* Pac-Man Cabinet Specific */
+.pacman-cabinet .marquee {
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+}
+
+.pacman-cabinet .marquee-content {
+    color: #000000;
+    text-shadow: 0 0 10px #FFD700;
+}
+
+.pacman-cabinet .cabinet-body {
+    background: linear-gradient(to bottom, #4169E1, #1E40AF);
+    padding: 30px;
+    min-height: 500px;
+}
+
+.pacman-cabinet .cabinet-screen {
+    background: #000000;
+    padding: 20px;
+    border: 5px solid #FFD700;
+    border-radius: 10px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pacman-maze {
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(90deg, transparent 48%, #4169E1 48%, #4169E1 52%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, #4169E1 48%, #4169E1 52%, transparent 52%);
+    background-size: 40px 40px;
+    position: relative;
+}
+
+.pacman-maze::before {
+    content: 'PAC-MAN';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFD700;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 0 0 20px #FFD700;
+}
+
+.pacman-cabinet .cabinet-base {
+    background: linear-gradient(to bottom, #4169E1, #1E3A8A);
+    height: 80px;
+    border-top: 3px solid #FFD700;
+}
+
+/* Pac-Man Character */
+.pacman-screen-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.pacman-character {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #FFD700;
+    border-radius: 50%;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    animation: pacman-chomp 0.5s infinite;
+    z-index: 3;
+}
+
+.pacman-character::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 30px solid #000000;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    transform-origin: left center;
+    animation: mouth 0.5s infinite;
+}
+
+@keyframes pacman-chomp {
+    0%, 100% {
+        clip-path: polygon(100% 50%, 0 0, 0 100%);
+    }
+    50% {
+        clip-path: polygon(100% 50%, 0 20%, 0 80%);
+    }
+}
+
+@keyframes mouth {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(25deg);
+    }
+}
+
+/* Ghost */
+.ghost {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    border-radius: 50% 50% 0 0;
+    animation: ghost-float 2s ease-in-out infinite;
+    z-index: 2;
+}
+
+.ghost-blinky {
+    background: #FF0000;
+}
+
+.ghost::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background:
+        radial-gradient(circle at 16.6% 0, transparent 10px, #FF0000 10px),
+        radial-gradient(circle at 50% 0, transparent 10px, #FF0000 10px),
+        radial-gradient(circle at 83.4% 0, transparent 10px, #FF0000 10px);
+    background-size: 33.33% 100%;
+    background-position: 0 0, 33.33% 0, 66.66% 0;
+    background-repeat: no-repeat;
+}
+
+.ghost::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    width: 12px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 14px 0 0 0 #ffffff;
+}
+
+@keyframes ghost-float {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-5px);
+    }
+}
+
+/* Pac-Dots */
+.pac-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFD700;
+    border-radius: 50%;
+    animation: dot-pulse 1s ease-in-out infinite;
+    z-index: 1;
+}
+
+.dot-1 {
+    top: 30%;
+    left: 45%;
+    animation-delay: 0s;
+}
+
+.dot-2 {
+    top: 50%;
+    left: 50%;
+    animation-delay: 0.3s;
+}
+
+.dot-3 {
+    top: 70%;
+    left: 40%;
+    animation-delay: 0.6s;
+}
+
+@keyframes dot-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+    }
+}
+
+/* Dig Dug Cabinet Specific */
+.digdug-cabinet .marquee {
+    background: linear-gradient(to bottom, #DC143C, #8B0000);
+}
+
+.digdug-cabinet .marquee-content {
+    color: #ffffff;
+    text-shadow: 0 0 10px #DC143C;
+}
+
+.digdug-cabinet .cabinet-body {
+    background: linear-gradient(to bottom, #1E90FF, #0C4A8A);
+    padding: 30px;
+    min-height: 500px;
+}
+
+.digdug-cabinet .cabinet-screen {
+    background: #000000;
+    padding: 20px;
+    border: 5px solid #DC143C;
+    border-radius: 10px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dig Dug Screen Content */
+.digdug-screen-content {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #4169E1 0%, #000000 70%);
+    position: relative;
+}
+
+/* Dig Dug Character */
+.digdug-character {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.digdug-character::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50% 50% 0 0;
+    border: 3px solid #0066CC;
+}
+
+.digdug-character::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 35px;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 3px solid #0066CC;
+    box-shadow: 0 5px 0 0 #0066CC;
+}
+
+/* Pooka Enemy */
+.pooka {
+    position: absolute;
+    width: 45px;
+    height: 50px;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    background: #FF6B35;
+    border-radius: 50% 50% 40% 40%;
+    animation: pooka-bounce 1.5s ease-in-out infinite;
+    z-index: 2;
+}
+
+.pooka::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 20px;
+    background: #FFD700;
+    border-radius: 50%;
+}
+
+.pooka::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    width: 8px;
+    height: 10px;
+    background: #000000;
+    border-radius: 50%;
+    box-shadow: 13px 0 0 0 #000000;
+}
+
+@keyframes pooka-bounce {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-8px);
+    }
+}
+
+/* Rocks */
+.rock {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #8B7355;
+    border-radius: 4px;
+    border: 2px solid #654321;
+    animation: rock-wiggle 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+.rock-1 {
+    top: 25%;
+    left: 50%;
+    animation-delay: 0s;
+}
+
+.rock-2 {
+    top: 70%;
+    left: 45%;
+    animation-delay: 1.5s;
+}
+
+@keyframes rock-wiggle {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(2deg);
+    }
+    75% {
+        transform: rotate(-2deg);
+    }
+}
+
+.digdug-cabinet .cabinet-base {
+    background: linear-gradient(to bottom, #1E90FF, #0A3A6A);
+    height: 80px;
+    border-top: 3px solid #DC143C;
+}
+
+/* Marquee */
+.marquee {
+    background: linear-gradient(to bottom, #ff0000, #cc0000);
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px 15px 0 0;
+    box-shadow:
+        0 5px 15px rgba(255, 0, 0, 0.5),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.marquee::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0%, 100% { left: -100%; }
+    50% { left: 100%; }
+}
+
+.marquee-content {
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    color: #ffffff;
+    text-shadow:
+        0 0 10px #fff,
+        0 0 20px #fff,
+        0 0 30px #ff0000,
+        0 0 40px #ff0000;
+    animation: flicker 0.5s infinite alternate;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
+}
+
+/* Cabinet Top */
+.cabinet-top {
+    height: 20px;
+    background: linear-gradient(to bottom, #3a2818, #2a1810);
+    border-top: 3px solid #4a3828;
+}
+
+/* Screen Area */
+.screen-area {
+    padding: 30px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    position: relative;
+    pointer-events: none;
+}
+
+.screen-area::before,
+.screen-area::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to right, #2a1810, transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.screen-area::before {
+    left: 0;
+}
+
+.screen-area::after {
+    right: 0;
+    background: linear-gradient(to left, #2a1810, transparent);
+}
+
+/* Bezel */
+.bezel {
+    background: #000000;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow:
+        inset 0 0 30px rgba(0, 0, 0, 0.9),
+        0 0 20px rgba(0, 0, 0, 0.8);
+    position: relative;
+    pointer-events: none;
+}
+
+.bezel::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.screen-container {
+    position: relative;
+    transform: rotateX(-2deg);
+    transform-style: preserve-3d;
+    isolation: isolate;
+    pointer-events: none;
+}
+
+.game-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #000000;
+    pointer-events: auto;
+}
+
+#gameCanvas {
+    border: none;
+    box-shadow:
+        0 0 30px rgba(0, 255, 0, 0.3),
+        inset 0 0 50px rgba(0, 255, 0, 0.1);
+    background: #000000;
+    display: block;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+/* CRT Scanlines */
+.scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 4px
+    );
+    opacity: 0.3;
+    z-index: 5;
+}
+
+.scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+#ui-overlay {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00;
+    position: relative;
+    z-index: 50;
+}
+
+#ui-overlay > div {
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ff00;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Screen Overlays */
+.screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 40px 60px;
+    border: 3px solid #00ff00;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.7);
+    z-index: 1000;
+    pointer-events: auto;
+    isolation: isolate;
+}
+
+.screen.hidden {
+    display: none;
+}
+
+.screen h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px #00ff00;
+    letter-spacing: 5px;
+}
+
+.insert-coin {
+    font-size: 24px;
+    color: #ffff00;
+    text-shadow: 0 0 15px #ffff00;
+    animation: blink 1s infinite;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.screen p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #00dd00;
+}
+
+.screen button {
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    background: #00ff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer !important;
+    transition: all 0.3s;
+    text-shadow: none;
+    position: relative;
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+}
+
+/* Debug override - force button to be clickable */
+#start-button,
+#restart-button {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 999999 !important;
+}
+
+/* Fix screen positioning */
+#start-screen,
+#game-over-screen {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) !important;
+}
+
+.screen button:hover {
+    background: #00dd00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+    transform: scale(1.05);
+}
+
+.screen button:active {
+    transform: scale(0.95);
+}
+
+#final-score {
+    font-size: 24px;
+    color: #00ff00;
+    margin: 20px 0;
+}
+
+/* Control Panel */
+.control-panel {
+    background: linear-gradient(to bottom, #2a1810, #1a0f08);
+    padding: 40px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    border-top: 3px solid #4a3828;
+}
+
+.control-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.coin-slot {
+    text-align: center;
+}
+
+.coin-label {
+    font-size: 12px;
+    color: #ffff00;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.slot {
+    width: 60px;
+    height: 8px;
+    background: #000000;
+    border-radius: 2px;
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, 0.8),
+        0 1px 2px rgba(255, 255, 255, 0.1);
+    margin: 0 auto;
+}
+
+/* Speakers */
+.speaker {
+    width: 120px;
+    height: 120px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    position: relative;
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.speaker::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        #1a1a1a 0px,
+        #1a1a1a 4px,
+        #0a0a0a 4px,
+        #0a0a0a 8px
+    );
+}
+
+.speaker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: #000000;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+.speaker-left {
+    position: absolute;
+    left: 80px;
+}
+
+.speaker-right {
+    position: absolute;
+    right: 80px;
+}
+
+/* Cabinet Bottom */
+.cabinet-bottom {
+    height: 60px;
+    background: linear-gradient(to bottom, #1a0f08, #0a0508);
+    position: relative;
+}
+
+.cabinet-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(to right,
+        #ffaa00 0%, #ffaa00 2%,
+        transparent 2%, transparent 98%,
+        #ffaa00 98%, #ffaa00 100%
+    );
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1600px) {
+    .arcade-room {
+        gap: 40px;
+    }
+
+    .side-cabinet {
+        width: 500px;
+        height: 700px;
+        transform: scale(0.75);
+    }
+
+    .pacman-cabinet {
+        transform: rotateY(20deg) rotateX(2deg) scale(0.7);
+    }
+
+    .digdug-cabinet {
+        transform: rotateY(-20deg) rotateX(2deg) scale(0.7);
+    }
+}
+
+@media (max-width: 1200px) {
+    .side-cabinet {
+        display: none;
+    }
+
+    .arcade-room {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 960px) {
+    .arcade-cabinet {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    #gameCanvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #ui-overlay {
+        width: 100%;
+        max-width: 800px;
+        font-size: 16px;
+    }
+
+    .marquee-content {
+        font-size: 28px;
+    }
+
+    .speaker-left,
+    .speaker-right {
+        position: relative;
+        left: auto;
+        right: auto;
+    }
+
+    .control-panel {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+}
